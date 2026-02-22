@@ -1,0 +1,44 @@
+<!-- <p>home works!</p>
+<h2>{{name}}</h2>
+<div *ngFor="let video of videos">
+  <h3>{{ video.title }}</h3>
+  
+  <iframe width="400" height="250"
+          [src]="getSafeUrl(video.url)"
+          frameborder="22px"
+          allowfullscreen>
+  </iframe>
+  
+  <button (click)="likeVideo(video.id)">❤️</button>
+</div> -->
+
+<div class="home-container">
+  <h2>{{ name }}</h2>
+
+  <div *ngIf="isLoading" class="loader">
+    <p>Loading videos...</p>
+  </div>
+
+  <div class="video-grid" *ngIf="!isLoading">
+    <div *ngFor="let video of videos" class="video-card">
+      <h3>{{ video.title }}</h3>
+      
+      <iframe width="100%" height="250"
+              [src]="getSafeUrl(video.url)"
+              frameborder="0"
+              allowfullscreen>
+      </iframe>
+      
+    <div *ngIf="authService.isLoggedIn()"  class="card-footer">
+        <button *ngIf="!video.is_favorite" (click)="likeVideo(video)" class="like-btn">
+          🤍
+        </button>
+        <span *ngIf="video.is_favorite" class="already-liked">❤️</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && videos.length === 0">
+    <p>No videos found. Start by uploading some!</p>
+  </div>
+</div>

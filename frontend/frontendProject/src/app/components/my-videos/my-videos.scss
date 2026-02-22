@@ -1,0 +1,93 @@
+$bg-color: #f9f9f9;
+$card-bg: #ffffff;
+$primary-text: #0f0f0f;
+$secondary-text: #606060;
+$accent-color: #ff0000; 
+
+.home-container {
+  padding: 20px;
+  background-color: $bg-color;
+  min-height: 100vh;
+
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    color: $primary-text;
+    margin-bottom: 25px;
+    font-weight: 500;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+  }
+
+  .video-card {
+    background: $card-bg;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      padding: 12px 15px 5px 15px;
+      margin: 0;
+      font-size: 1.1rem;
+      color: $primary-text;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+
+      aspect-ratio: 16 / 9;
+    }
+
+    .card-footer {
+      padding: 10px 15px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .like-btn {
+        background: transparent;
+        border: 1px solid #eee;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background-color: #f2f2f2;
+          transform: scale(1.1);
+        }
+
+        &:active {
+          background-color: #ffebee;
+        }
+      }
+    }
+  }
+}
+
+.loader {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: $secondary-text;
+}

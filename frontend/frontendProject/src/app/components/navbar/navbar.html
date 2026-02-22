@@ -1,0 +1,21 @@
+
+<nav class="navbar">
+  <div class="logo" routerLink="/">
+    🎬 purelearn
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">home pagh </a>
+    
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <a routerLink="/my-videos" routerLinkActive="active">my videos</a>
+      <a routerLink="/favorites" routerLinkActive="active">favorites</a>
+      <button (click)="logout()" class="logout-btn">logout</button>
+    </ng-container>
+
+    <ng-container *ngIf="!authService.isLoggedIn()">
+      <a routerLink="/login" routerLinkActive="active">login</a>
+      <a routerLink="/register" class="register-btn">sing in</a>
+    </ng-container>
+  </div>
+</nav>
