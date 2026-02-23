@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Video1, Video } from '../../services/video'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
@@ -11,43 +11,63 @@ import { Auth } from '../../services/auth';
   styleUrl: './home.scss',
 })
 export class Home implements OnInit {
-  videos: Video1[] = [];
-  myvideos: Video1[] =[];
-  isLoading = true;
-  name = ''
-  constructor(public authService: Auth,private videoService: Video,private sanitizer: DomSanitizer) { }
+  videos = signal<Video1[]>([]);
+  myFavoritesVideos: any[] = [];
+  isLoading = signal(true)
+  name = signal('');//-------------------------------------
+  constructor(public authService: Auth, private videoService: Video, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-
+    this.loadVideosToNotConnected() ;
+    this.loadUser();
+    this.loadVideosAndFavorites();
+  }
+  loadUser() {
     this.authService.getCurrentUser().subscribe({
-      next: (data) => {
-        this.name=`hello ${data.username}`
-      }
+      next: (data) => this.name.set(`hello ${data.username}`)
     })
-    this.videoService.getMyVideos().subscribe({
-      next: (data) => {
-        this.myvideos = data;
-      },
-      error: (err) => {
-        console.error('error in videos', err);
-      }
-    })
+  }
+
+  loadVideosAndFavorites() {
+
     this.videoService.getVideos().subscribe({
-      next: (data) => {
-        this.videos = data;
-        this.isLoading = false;
+      next: (videoData) => {
+        this.videoService.getMyFavorites().subscribe({
+          next: (favData) => {
+            const favoritesIds = favData.map((f: any) => f.video.id);
+            const mergedVideos = videoData.map(v => ({ ...v, is_favorite: favoritesIds.includes(v.id) }));
+            this.videos.set(mergedVideos);
+            this.isLoading.set(false);
+          },
+          error: () => this.isLoading.set(false)
+        });
       },
-      error: (err) => {
-        console.error('error in videos', err);
-        this.isLoading = false;
+      error: () => this.isLoading.set(false)
+    });
+  }
+  loadVideosToNotConnected() {
+    this.videoService.getVideos().subscribe({
+      next: (videoData) => {
+        this.videos.set(videoData);
+        this.isLoading.set(false);
       }
     })
   }
+
   likeVideo(video: Video1) {
     this.videoService.addFavorite(video.id).subscribe({
       next: () => {
-        video.is_favorite = true;
-        alert('added to your Favorite!');
+        this.videos.update(items =>
+          items.map(v => v.id === video.id ? { ...v, is_favorite: true } : v))
+      }
+    });
+  }
+  unLikeVideo(video: Video1) {
+    this.videoService.removeFavorite(video.id).subscribe({
+      next: () => {
+        this.videos.update(items =>
+          items.map(v => v.id === video.id ? { ...v, is_favorite: false } : v)
+        );
       }
     });
   }

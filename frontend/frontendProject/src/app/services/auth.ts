@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, tap } from 'rxjs';
+import { catchError, map, Observable, startWith, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -41,7 +41,19 @@ export class Auth {
   isLoggedIn(): boolean {
     return this.getToken() !== null;
   }
+  
   getCurrentUser(): Observable<any> {
     return this.http.get(this.url + 'me/');
+  }
+  
+  currentUser: any = signal(false);
+  loadUser() {
+    this.getCurrentUser().subscribe(user => {
+      this.currentUser.update(()=>user);
+    });
+  }
+
+  isAdmin(): boolean {
+    return this.currentUser()?.is_admin === true;
   }
 }

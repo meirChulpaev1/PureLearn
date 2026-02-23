@@ -1,28 +1,26 @@
-import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Video1, Video } from '../../services/video'
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
+import { Component, OnInit, signal } from '@angular/core';
 import { Auth } from '../../services/auth';
-import { Router } from '@angular/router';
+import { Video, Video1 } from '../../services/video';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 @Component({
-  selector: 'app-my-videos',
+  selector: 'app-admin',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './my-videos.html',
-  styleUrl: './my-videos.scss',
+  templateUrl: './admin.html',
+  styleUrl: './admin.scss',
 })
-export class MyVideos implements OnInit {
-
+export class Admin implements OnInit {
+  name = signal<string>('');
   videos = signal<Video1[]>([]);
   isLoading = signal(true)
-
-  constructor(private authService: Auth, private videoService: Video, private sanitizer: DomSanitizer, private router: Router) { }
+  constructor(private authService: Auth, private videoService: Video, private sanitizer: DomSanitizer) { }
   ngOnInit(): void {
-   
     this.loadVideos();
   }
   loadVideos() {
-    this.videoService.getMyVideos().subscribe({
+    this.videoService.getPendingVideos().subscribe({
       next: (data) => {
         this.videos.set(data);
         this.isLoading.update(()=>false);
@@ -33,24 +31,22 @@ export class MyVideos implements OnInit {
       }
     })
   }
-
-
   getSafeUrl(url: string): SafeResourceUrl {
     const embedUrl = url.replace('watch?v=', 'embed/');
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
-  delVideo(id: number) {
-    this.videoService.deleteVideo(id).subscribe({
+  approveVideo(id: number) {
+    this.videoService.approveVideo(id).subscribe({
       next: () => {
         this.videos.update(prev => prev.filter(v => v.id !== id));
-      },
-      error: (error) => { alert(error) }
+      }
     })
   }
-
-  toAddVideo() {
-    this.router.navigate(['/add-video']);
+  rejectVideo(id: number) {
+    this.videoService.rejectVideo(id).subscribe({
+      next: () => {
+        this.videos.update(prev => prev.filter(v => v.id !== id));
+      }
+    })
   }
-
 }
-

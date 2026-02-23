@@ -19,6 +19,8 @@ export class Login {
     this.authService.login(this.user.username, this.user.password).subscribe({
       next: (res) => {
         this.authService.saveToken(res.token);
+        this.authService.loadUser();
+        this.authService.isAdmin()
         this.router.navigate(['/']);
       },
       error: () => alert('error')

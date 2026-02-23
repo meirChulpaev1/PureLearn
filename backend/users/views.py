@@ -32,4 +32,6 @@ class UserDetailView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        return Response(serializer.data)
+        data =serializer.data
+        data['is_admin'] = request.user.is_staff
+        return Response(data)

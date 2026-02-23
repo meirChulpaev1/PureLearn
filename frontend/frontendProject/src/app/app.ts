@@ -1,14 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
+import { Auth } from './services/auth';
 @Component({
   selector: 'app-root',
-  standalone:true,
-  imports: [RouterOutlet,Navbar],
+  standalone: true,
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('frontendProject');
-
+  constructor(private authService: Auth) { }
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.authService.loadUser();
+    }
+  }
 }

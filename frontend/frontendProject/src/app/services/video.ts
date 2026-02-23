@@ -23,8 +23,8 @@ export class Video {
   getVideos(): Observable<Video1[]> {
     return this.http.get<Video1[]>(this.apiUrl + 'get-videos/');
   }
-  addVideo(data:any): Observable<any>{
-    return this.http.post(this.apiUrl + 'post/', data);
+  addVideo(title: string, url: string, category: string): Observable<any>{
+    return this.http.post(this.apiUrl + 'post/', { 'title':title,'url':url,'category':category});
   }  
   deleteVideo(id: number): Observable<any> {
     return this.http.delete(this.apiUrl + `delete/${id}/`);

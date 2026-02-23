@@ -1,24 +1,9 @@
-<p>my-videos works!</p>
-
-
-<button (click)="toAddVideo()" class="cta">
-  <span>add video</span>
-  <svg width="15px" height="10px" viewBox="0 0 13 10">
-    <path d="M1,5 L11,5"></path>
-    <polyline points="8 1 12 5 8 9"></polyline>
-  </svg>
-</button>
-      
-
-
-<div class="home-container">
-
-
+<p>admin works!</p>
+<div class="home-container" >
   <div *ngIf="isLoading()" class="loader">
     <p>Loading videos...</p>
   </div>
-
-  <div class="video-grid" *ngIf="!isLoading()">
+  <div *ngIf="!isLoading()" class="video-grid">
     <div *ngFor="let video of videos()" class="video-card">
       <h3>{{ video.title }}</h3>
       
@@ -29,7 +14,8 @@
       </iframe>
       <div style="text-align: center;">
 
-        <button (click)="delVideo(video.id)" class="add-video-btn">❌</button>
+        <button (click)="rejectVideo(video.id)" class="reject">❌</button>
+        <button (click)="approveVideo(video.id)" class="approve" >✅</button>
       </div>
     </div>
   </div>
