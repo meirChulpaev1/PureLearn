@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Auth } from '../../services/auth';
@@ -11,20 +11,17 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar implements OnInit {
-  name = signal('')
-  constructor(public authService: Auth, private router: Router) { }
-  ngOnInit(): void {
-    if(this.authService.isLoggedIn()){
-    this.authService.getCurrentUser().subscribe({
-        next: (data) => this.name.set(`hello ${data.username}`)
-  })}
-}
+export class Navbar {
+  name = signal<string>("")
+  authService = inject(Auth);
+  user = computed(()=> this.authService.currentUser())
+  constructor(private router: Router) {}
 
   logout() {
       this.authService.logout().subscribe({
         next: () => {
           this.router.navigate(['/login']);
+          this.name.set(``);
         },
         error: () => {
           localStorage.removeItem('token');

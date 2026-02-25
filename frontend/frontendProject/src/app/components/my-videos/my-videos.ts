@@ -16,7 +16,7 @@ export class MyVideos implements OnInit {
   videos = signal<Video1[]>([]);
   isLoading = signal(true)
 
-  constructor(private authService: Auth, private videoService: Video, private sanitizer: DomSanitizer, private router: Router) { }
+  constructor(private videoService: Video, private sanitizer: DomSanitizer, private router: Router) { }
   ngOnInit(): void {
    
     this.loadVideos();

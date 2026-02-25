@@ -1,4 +1,3 @@
-<p>admin works!</p>
 <div class="home-container" >
   <div *ngIf="isLoading()" class="loader">
     <p>Loading videos...</p>
@@ -12,14 +11,20 @@
               frameborder="0"
               allowfullscreen>
       </iframe>
+      <h4>category -{{video.category_display}} </h4>
       <div style="text-align: center;">
 
         <button (click)="rejectVideo(video.id)" class="reject">❌</button>
         <button (click)="approveVideo(video.id)" class="approve" >✅</button>
       </div>
+      <p style="margin-left: 5px;">Category by YouTube API:<strong> {{categoryCache()[video.url]}}</strong></p>
     </div>
   </div>
     <div *ngIf="!isLoading() && videos().length === 0">
     <p>No videos found. Start by uploading some!</p>
   </div>
 </div>
+
+
+
+

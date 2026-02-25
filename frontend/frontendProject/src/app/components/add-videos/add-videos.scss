@@ -1,4 +1,6 @@
-
+h2{
+  text-align: center;
+}
 form {
   max-width: 400px;
   margin: 40px auto;
@@ -115,3 +117,61 @@ button:active {
   }
 }
       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.status-msg {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+
+    &.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    &.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    &.idle {
+      background-color: #e2e3e5;
+      color: #383d41;
+      border: 1px solid #d6d8db;
+    }
+  }
+
+
+
+  .error-banner {
+    background-color: #fff1f0;
+    color: #f5222d;
+    border: 1px solid #ffa39e;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    animation: fadeIn 0.3s ease;
+  }

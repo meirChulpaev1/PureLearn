@@ -1,6 +1,3 @@
-<p>my-videos works!</p>
-
-
 <button (click)="toAddVideo()" class="cta">
   <span>add video</span>
   <svg width="15px" height="10px" viewBox="0 0 13 10">
@@ -8,7 +5,7 @@
     <polyline points="8 1 12 5 8 9"></polyline>
   </svg>
 </button>
-      
+
 
 
 <div class="home-container">
@@ -21,19 +18,17 @@
   <div class="video-grid" *ngIf="!isLoading()">
     <div *ngFor="let video of videos()" class="video-card">
       <h3>{{ video.title }}</h3>
-      
-      <iframe width="100%" height="250"
-              [src]="getSafeUrl(video.url)"
-              frameborder="0"
-              allowfullscreen>
+
+      <iframe width="100%" height="250" [src]="getSafeUrl(video.url)" frameborder="0" allowfullscreen>
       </iframe>
       <div style="text-align: center;">
-
-        <button (click)="delVideo(video.id)" class="add-video-btn">❌</button>
+        <button (click)="delVideo(video.id)" class="add-video-btn">🗑️</button>
       </div>
+      <h4 [className]="video.is_approved? 'green' : 'red' " ><strong *ngIf="!video.is_approved">not</strong> approved <span *ngIf="!video.is_approved">yet</span></h4>
     </div>
   </div>
-    <div *ngIf="!isLoading() && videos().length === 0">
+  <div *ngIf="!isLoading() && videos().length === 0">
     <p>No videos found. Start by uploading some!</p>
   </div>
+
 </div>

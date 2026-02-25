@@ -79,3 +79,17 @@ $bg-color: #f4f7f6;
     }
   }
 }
+
+.error-banner {
+    background-color: #fff1f0;
+    color: #f5222d;
+    border: 1px solid #ffa39e;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    animation: fadeIn 0.3s ease;
+  }

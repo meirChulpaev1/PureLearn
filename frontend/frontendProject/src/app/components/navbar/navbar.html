@@ -1,24 +1,24 @@
 <nav class="navbar">
   <div class="logo" routerLink="/">
-    🎬 purelearn
+    🎬 Pure-Learn
   </div>
 
   <div class="nav-links">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">home pagh </a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">home page</a>
 
     <ng-container *ngIf="authService.isLoggedIn()">
       <a routerLink="/my-videos" routerLinkActive="active">my videos</a>
       <a routerLink="/favorites" routerLinkActive="active">favorites</a>
-      <a *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active">admin stuff</a>
+      <a *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active">admin action</a>
       <button (click)="logout()" class="logout-btn">logout</button>
     </ng-container>
 
     <ng-container *ngIf="!authService.isLoggedIn()">
       <a routerLink="/login" routerLinkActive="active">login</a>
-      <a routerLink="/register" class="register-btn">sing in</a>
+      <a routerLink="/register" class="register-btn">sign in</a>
     </ng-container>
   </div>
 </nav>
 <div *ngIf="authService.isLoggedIn()">
-  <h2>{{ name() }}</h2>
+  <h2>hello {{user().username}}</h2>
 </div>

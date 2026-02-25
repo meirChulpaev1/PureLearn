@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
@@ -13,15 +13,34 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class Register {
-  user ={ username: '', email: '', password: '' };
-  constructor(private authService: Auth, private router: Router) {}
+  user = { username: '', email: '', password: '' };
+  errorMessage = signal<string | null>(null);
+  constructor(private authService: Auth, private router: Router) { }
+
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
   onRegister() {
+    this.errorMessage.set(null);
+    if (!this.user.username || !this.user.password) {
+      this.errorMessage.set('Please enter a username and password.');
+      return;
+    }
+    if (!this.isValidEmail(this.user.email)) {
+      this.errorMessage.set('The email address is invalid.');
+      return;
+    }
     this.authService.register(this.user.username, this.user.password, this.user.email).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
+        this.authService.loadUser();
         this.router.navigate(['/']);
       },
-      error: () => alert('error')
+      error: (err) => {
+        this.errorMessage.set('');
+      }
     });
   }
 }

@@ -1,4 +1,4 @@
-$bg-color: #f9f9f9;
+$bg-color: #f0f2f5;
 $card-bg: #ffffff;
 $primary-text: #0f0f0f;
 $secondary-text: #606060;
@@ -190,4 +190,26 @@ $accent-color: #ff0000;
 
 .add-video-btn:hover {
   background-color: #920303;
+}
+
+ .red{
+  font-size: 16px;
+  font-weight: 500;
+  color: #c51616;
+  margin: 10px auto;
+  padding: 6px 12px;
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+ .green{
+  font-size: 16px;
+  font-weight: 500;
+  color: #10d13a;
+  margin: 10px auto;
+  padding: 6px 12px;
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  width: fit-content;
 }

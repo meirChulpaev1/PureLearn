@@ -8,7 +8,8 @@ export interface Video1 {
   url: string;
   category_display: string;
   uploader: string;
-  is_favorite: boolean;
+  is_favorite: boolean;//------------------------------
+  is_approved:boolean
 }
 
 @Injectable({
@@ -54,6 +55,9 @@ export class Video {
 
   getMyFavorites(): Observable<any> {
     return this.http.get(this.apiUrl + 'my-favorites/');
+  }
+  get_video_category(url: string): Observable<any> {
+    return this.http.post(this.apiUrl + 'api/',{'url':url});
   }
 
 

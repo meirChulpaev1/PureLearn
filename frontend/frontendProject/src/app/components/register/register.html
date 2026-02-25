@@ -1,19 +1,10 @@
-<!-- <p>register works!</p>
-<div>
-    <h2>Enter details to register</h2>
-    <form (ngSubmit)="onRegister()">
-      <input type="text" [(ngModel)]="user.username" name="username" placeholder="name" required>
-      <input type="email" [(ngModel)]="user.email" name="email" placeholder="email" required>
-      <input type="password" [(ngModel)]="user.password" name="password" placeholder="password" required>
-      <button type="submit">Sign up</button>
-    </form>
-    <p>Already have an account?<a routerLink="/login">Login here</a></p>
-</div> -->
-
 <div class="auth-container">
   <div class="auth-card">
     <h2>Enter details to register</h2>
-    
+        <div *ngIf="errorMessage()" class="error-banner">
+      <span class="icon">⚠️</span>
+      {{ errorMessage() }}
+    </div>
     <form (ngSubmit)="onRegister()">
       <input type="text" [(ngModel)]="user.username" name="username" placeholder="Name" required>
       <input type="email" [(ngModel)]="user.email" name="email" placeholder="Email" required>
@@ -21,7 +12,7 @@
       
       <button type="submit">Sign up</button>
     </form>
-    
+
     <p>Already have an account? <a routerLink="/login">Login here</a></p>
   </div>
 </div>

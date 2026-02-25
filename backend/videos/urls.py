@@ -15,5 +15,8 @@ urlpatterns = [
     path('add-favorites/<int:video_id>/',views.add_favorite,name="add-favorites"),
     path('remove-favorites/<int:video_id>/',views.remove_favorite,name="remove-favorites"),
     path('my-favorites/',views.get_my_favorites,name="my-favorites"),
+
+
+    path('api/',views.get_video_category,name="api"),
    
 ]

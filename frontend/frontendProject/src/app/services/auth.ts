@@ -49,7 +49,8 @@ export class Auth {
   currentUser: any = signal(false);
   loadUser() {
     this.getCurrentUser().subscribe(user => {
-      this.currentUser.update(()=>user);
+      this.currentUser.set(user);
+      console.log(this.currentUser())
     });
   }
 
